@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import pro.sky.homework25.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.homework25.exceptions.EmployeeNotFoundException;
 import pro.sky.homework25.exceptions.EmployeeStorageIsFullException;
@@ -13,6 +14,7 @@ import pro.sky.homework25.exceptions.EmployeeStorageIsFullException;
 import java.util.Collection;
 import java.util.List;
 
+@RestController
 @RequestMapping(path = "/employee")
 public class EmployeeController {
     private EmployeeService employeeService;
