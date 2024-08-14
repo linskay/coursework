@@ -20,12 +20,11 @@ public class Employee {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(lastName, employee.lastName) &&
-                Objects.equals(firstName, employee.firstName);
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Employee other = (Employee) obj;
+        return firstName.equals(other.firstName) && lastName.equals(other.lastName);
     }
 
     @Override
