@@ -12,10 +12,14 @@ public class Employee {
     }
 
     public String getName() {
-        return firstName;
+        return firstName + " " + lastName;
     }
 
     public String getSurname() {
+        return lastName;
+    }
+
+    public String getFullame() {
         return lastName;
     }
 
