@@ -13,17 +13,17 @@ import java.util.Collection;
 @RestController
 @RequestMapping(path = "/employee")
 public class EmployeeController {
-    private EmployeeService employeeService;
+    private EmployeeServiceImpl employeeServiceImpl;
 
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+    public EmployeeController(EmployeeServiceImpl employeeServiceImpl) {
+        this.employeeServiceImpl = employeeServiceImpl;
     }
 
     @GetMapping(path = "/add")
     public ResponseEntity<String> addEmployee(@RequestParam("firstName") String firstName,
                                               @RequestParam("lastName") String lastName) {
         try {
-            Employee employee = employeeService.addEmployee(firstName, lastName);
+            Employee employee = employeeServiceImpl.addEmployee(firstName, lastName);
             return ResponseEntity.ok("Сотрудник " + firstName + " " + lastName + " добавлен");
         } catch (EmployeeStorageIsFullException e) {
             throw e;
@@ -36,7 +36,7 @@ public class EmployeeController {
     public Employee remove(@RequestParam("firstName") String firstName,
                            @RequestParam("lastName") String lastName) {
         try {
-            return employeeService.removeEmployee(firstName, lastName);
+            return employeeServiceImpl.removeEmployee(firstName, lastName);
         } catch (EmployeeNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -46,17 +46,16 @@ public class EmployeeController {
     public Employee find(@RequestParam("firstName") String firstName,
                          @RequestParam("lastName") String lastName) {
         try {
-            employeeService.findEmployee(firstName, lastName);
+            employeeServiceImpl.findEmployee(firstName, lastName);
         } catch (EmployeeNotFoundException e) {
             System.out.println("Сотрудник " + firstName + " " + lastName + " не найден");
             throw e;
         }
-        return employeeService.findEmployee(firstName, lastName);
+        return employeeServiceImpl.findEmployee(firstName, lastName);
     }
 
     @GetMapping
     public Collection<Employee> findAll() {
-        return employeeService.findAll();
+        return employeeServiceImpl.findAll();
     }
 }
-
