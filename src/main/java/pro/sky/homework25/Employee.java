@@ -2,6 +2,8 @@ package pro.sky.homework25;
 
 import java.util.Objects;
 
+import static org.apache.tomcat.util.IntrospectionUtils.capitalize;
+
 public class Employee {
     private String firstName;
     private String lastName;
@@ -16,15 +18,15 @@ public class Employee {
     }
 
     public String getName() {
-        return firstName + " " + lastName;
+        return capitalize(firstName);
     }
 
     public String getSurname() {
-        return lastName;
+        return capitalize(lastName);
     }
 
-    public String getFullame() {
-        return lastName;
+    public String getFullName() {
+        return getSurname() + " " + getName();
     }
 
     public int getSalary() {
@@ -64,6 +66,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "ФИ: " + lastName + " " + firstName;
+        return getFullName();
     }
 }

@@ -1,9 +1,11 @@
-package pro.sky.homework25;
+package pro.sky.homework25.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import pro.sky.homework25.Employee;
+import pro.sky.homework25.EmployeeServiceImpl;
 import pro.sky.homework25.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.homework25.exceptions.EmployeeNotFoundException;
 import pro.sky.homework25.exceptions.EmployeeStorageIsFullException;
@@ -24,7 +26,7 @@ public class EmployeeController {
                                               @RequestParam("lastName") String lastName) {
         try {
             Employee employee = employeeServiceImpl.addEmployee(firstName, lastName);
-            return ResponseEntity.ok("Сотрудник " + firstName + " " + lastName + " добавлен");
+            return ResponseEntity.ok("Сотрудник " + employee.getFullName() + " добавлен");
         } catch (EmployeeStorageIsFullException e) {
             throw e;
         } catch (EmployeeAlreadyAddedException e) {

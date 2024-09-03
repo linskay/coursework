@@ -46,23 +46,3 @@ public class EmployeeServiceNew implements EmployeeServiceNewInterface {
                 .collect(groupingBy(Employee::getDepartment));
     }
 }
-
-//public int getTotalSalary() {
-//    int totalSalary = 0;
-//    for (Employee employee : employees) {
-//        totalSalary += employee.getSalary();
-//    }
-//    return totalSalary;
-//}
-//
-//public int totalMonthlyAverageSalary() {
-//    int totalMonthlyAverageSalary = getTotalSalary() / employees.length;
-//    return totalMonthlyAverageSalary;
-//}
-//
-//public int departmentNumberGenerator() {
-//    java.util.Random random = new java.util.Random();
-//    int minimumScore = 1;
-//    int departmentNumberGenerator = random.nextInt(5) + minimumScore;
-//    return departmentNumberGenerator;
-//}

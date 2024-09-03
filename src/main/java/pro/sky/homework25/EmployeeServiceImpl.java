@@ -33,29 +33,29 @@ public abstract class EmployeeServiceImpl implements EmployeeServiceInterface {
             throw new EmployeeStorageIsFullException("Зарплаты на всех не хватит, макс. кол-во сотрудников - " + MAX_EMPLOYEES);
         }
         Employee employee = new Employee(firstName, lastName, salary.intValue(), department.intValue());
-        if (employees.containsKey(employee.getFullame())) {
-            throw new EmployeeAlreadyAddedException("Этот " + firstName + " " + lastName + " сотрудник уже есть");
+        if (employees.containsKey(employee.getFullName())) {
+            throw new EmployeeAlreadyAddedException("Этот " + employee.getFullName() + " сотрудник уже есть");
         }
-        employees.put(employee.getFullame(), employee);
+        employees.put(employee.getFullName(), employee);
         return employee;
     }
 
     @Override
     public Employee removeEmployee(String firstName, String lastName, Integer salary, Integer department) {
         Employee employee = new Employee(firstName, lastName, salary, department);
-        if (employees.containsKey(employee.getFullame())) {
-            return employees.remove(employee.getFullame());
+        if (employees.containsKey(employee.getFullName())) {
+            return employees.remove(employee.getFullName());
         }
-        throw new EmployeeNotFoundException("Такого сотрудника " + firstName + " " + lastName + " нет в базе, увы");
+        throw new EmployeeNotFoundException("Такого сотрудника " + employee.getFullName() + " нет в базе, увы");
     }
 
     @Override
     public Employee findEmployee(String firstName, String lastName, Integer salary, Integer department) {
         Employee employee = new Employee(firstName, lastName, salary, department);
-        if (!employees.containsKey(employee.getFullame())) {
-            throw new EmployeeNotFoundException("Такого сотрудника " + firstName + " " + lastName + " нет в базе, увы");
+        if (!employees.containsKey(employee.getFullName())) {
+            throw new EmployeeNotFoundException("Такого сотрудника " + employee.getFullName() + " нет в базе, увы");
         }
-        return employees.get(employee.getFullame());
+        return employees.get(employee.getFullName());
     }
 
     @Override
