@@ -18,10 +18,12 @@ public class Employee {
     }
 
     public String getName() {
-        return capitalize(firstName);
+        String name = firstName.trim().replaceAll("[^a-zA-Zа-яА-Я ]", "");
+        return capitalize(name);
     }
 
     public String getSurname() {
+        String surname = lastName.trim().replaceAll("[^a-zA-Zа-яА-Я ]", "");
         return capitalize(lastName);
     }
 

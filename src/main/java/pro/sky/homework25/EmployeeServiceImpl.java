@@ -9,7 +9,7 @@ import pro.sky.homework25.exceptions.EmployeeStorageIsFullException;
 import java.util.*;
 
 @Service
-public abstract class EmployeeServiceImpl implements EmployeeServiceInterface {
+public class EmployeeServiceImpl implements EmployeeServiceInterface {
     private final int MAX_EMPLOYEES = 20;
     private final Map<String, Employee> employees = new HashMap<>();
 
@@ -27,6 +27,7 @@ public abstract class EmployeeServiceImpl implements EmployeeServiceInterface {
         addEmployee("Дюша", "Кофеинов", 75_000, 3);
     }
 
+
     @Override
     public Employee addEmployee(String firstName, String lastName, Integer salary, Integer department) {
         if (employees.size() >= MAX_EMPLOYEES) {
@@ -41,12 +42,22 @@ public abstract class EmployeeServiceImpl implements EmployeeServiceInterface {
     }
 
     @Override
+    public Employee removeEmployee(String firstName, String lastName) {
+        return null;
+    }
+
+    @Override
     public Employee removeEmployee(String firstName, String lastName, Integer salary, Integer department) {
         Employee employee = new Employee(firstName, lastName, salary, department);
         if (employees.containsKey(employee.getFullName())) {
             return employees.remove(employee.getFullName());
         }
         throw new EmployeeNotFoundException("Такого сотрудника " + employee.getFullName() + " нет в базе, увы");
+    }
+
+    @Override
+    public Employee findEmployee(String firstName, String lastName) {
+        return null;
     }
 
     @Override

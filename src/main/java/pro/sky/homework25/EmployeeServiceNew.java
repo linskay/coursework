@@ -1,5 +1,6 @@
 package pro.sky.homework25;
 
+import org.springframework.stereotype.Service;
 import pro.sky.homework25.exceptions.EmployeeNotFoundException;
 
 import java.util.Collection;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
 
+@Service
 public class EmployeeServiceNew implements EmployeeServiceNewInterface {
     private final EmployeeServiceImpl employeeServiceImpl;
 

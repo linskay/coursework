@@ -23,9 +23,11 @@ public class EmployeeController {
 
     @GetMapping(path = "/add")
     public ResponseEntity<String> addEmployee(@RequestParam("firstName") String firstName,
-                                              @RequestParam("lastName") String lastName) {
+                                              @RequestParam("lastName") String lastName,
+                                              @RequestParam("salary") Integer salary,
+                                              @RequestParam("department") Integer department) {
         try {
-            Employee employee = employeeServiceImpl.addEmployee(firstName, lastName);
+            Employee employee = employeeServiceImpl.addEmployee(firstName, lastName, salary, department);
             return ResponseEntity.ok("Сотрудник " + employee.getFullName() + " добавлен");
         } catch (EmployeeStorageIsFullException e) {
             throw e;
