@@ -32,6 +32,9 @@ public class Employee {
     }
 
     public int getSalary() {
+        if (salary < 0) {
+            throw new IllegalArgumentException("Зарплата не может быть отрицательной.");
+        }
         return salary;
     }
 
@@ -43,6 +46,9 @@ public class Employee {
     }
 
     public int getDepartment() {
+        if (department < 1 || department > 5) {
+            throw new IllegalArgumentException("Недопустимый номер отдела. Должно быть от 1 до 5.");
+        }
         return department;
     }
 
@@ -63,7 +69,7 @@ public class Employee {
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName);
+        return Objects.hash(firstName, lastName, department, salary);
     }
 
     @Override

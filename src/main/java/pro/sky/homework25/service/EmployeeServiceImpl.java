@@ -1,15 +1,17 @@
-package pro.sky.homework25;
+package pro.sky.homework25.service;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
+import pro.sky.homework25.Employee;
 import pro.sky.homework25.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.homework25.exceptions.EmployeeNotFoundException;
 import pro.sky.homework25.exceptions.EmployeeStorageIsFullException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeServiceInterface {
+public class EmployeeServiceImpl implements EmployeeService {
     private final int MAX_EMPLOYEES = 20;
     private final Map<String, Employee> employees = new HashMap<>();
 
@@ -27,37 +29,28 @@ public class EmployeeServiceImpl implements EmployeeServiceInterface {
         addEmployee("Дюша", "Кофеинов", 75_000, 3);
     }
 
-
     @Override
     public Employee addEmployee(String firstName, String lastName, Integer salary, Integer department) {
-        if (employees.size() >= MAX_EMPLOYEES) {
-            throw new EmployeeStorageIsFullException("Зарплаты на всех не хватит, макс. кол-во сотрудников - " + MAX_EMPLOYEES);
-        }
         Employee employee = new Employee(firstName, lastName, salary.intValue(), department.intValue());
         if (employees.containsKey(employee.getFullName())) {
             throw new EmployeeAlreadyAddedException("Этот " + employee.getFullName() + " сотрудник уже есть");
+        }
+        if (employees.size() >= MAX_EMPLOYEES) {
+            throw new EmployeeStorageIsFullException("Зарплаты на всех не хватит, макс. кол-во сотрудников - " + MAX_EMPLOYEES);
         }
         employees.put(employee.getFullName(), employee);
         return employee;
     }
 
-    @Override
-    public Employee removeEmployee(String firstName, String lastName) {
-        return null;
-    }
 
     @Override
     public Employee removeEmployee(String firstName, String lastName, Integer salary, Integer department) {
         Employee employee = new Employee(firstName, lastName, salary, department);
-        if (employees.containsKey(employee.getFullName())) {
-            return employees.remove(employee.getFullName());
+        if (!employees.containsKey(employee.getFullName())) {
+            throw new EmployeeNotFoundException("Такого сотрудника " + employee.getFullName() + " нет в базе, увы");
         }
-        throw new EmployeeNotFoundException("Такого сотрудника " + employee.getFullName() + " нет в базе, увы");
-    }
-
-    @Override
-    public Employee findEmployee(String firstName, String lastName) {
-        return null;
+        employees.remove(employee.getFullName());
+        return employee;
     }
 
     @Override
@@ -72,5 +65,21 @@ public class EmployeeServiceImpl implements EmployeeServiceInterface {
     @Override
     public Collection<Employee> findAll() {
         return Collections.unmodifiableCollection(employees.values());
+    }
+
+    @Override
+    public Map<Integer, List<Employee>> allEmployeesDepartments() {
+        return employees.values().stream()
+                .collect(Collectors.groupingBy(
+                        Employee::getDepartment,
+                        Collectors.toList()
+                ));
+    }
+
+    @Override
+    public int getTotalSalary() {
+        return employees.values().stream()
+                .mapToInt(Employee::getSalary)
+                .sum();
     }
 }
